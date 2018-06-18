@@ -2,8 +2,12 @@
 It all started when I stumbled upon the Open AI Retro Contest https://contest.openai.com/
 I always liked the idea of AI playing video games and playing such an iconic platform game was too much to pass (I'm still hoping for Mario and Donkey Kong next though).
 
-<p align="center"> <video src="human.mp4"/> </p>
-
+<p align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=3U1Tkj1sg54
+" target="_blank"><img src="http://img.youtube.com/vi/3U1Tkj1sg54/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10" /></a>
+ </p>
+ 
 That kind of challenge in complex and unpredictible environments will also contribute to agents behing useful in real life environments which evolve as you progress.
 
 ## What you need
@@ -35,9 +39,33 @@ The Q value was initially set to the estimated points earned given a state and a
 To stabilise the algorithm, we introduce a target network which is the same as the principal network but fixed for a set time to allow the principal alogorithm to converge without behaving like a dog chasing its own tail.
 <p align="center"> <img src="double_QN.png"/> </p>
 
+
+        Q = model.predict(diff_obs[np.newaxis,:])
+        Q_ = model.predict(diff_obs_new[np.newaxis,:])
+        Q_target = target_model.predict(diff_obs_new[np.newaxis,:])
+
+        target_ = copy.copy(Q)
+
+        target_[0,action] = reward_ + gamma * Q_target[0,:][np.argmax(Q_[0,:])]
+
+
 ### Vision CNN
 We use a fairly classical CNN to give our algorithm eyes, with Keras, the algorithm is quite concise:
 <p align="center"> <img src="Q_CNN.png"/> </p>
+
+        model = Sequential()
+        model.add(Conv2D(32, kernel_size=(8,8), strides = 4, activation="relu", input_shape=(128,128,3)))
+        model.add(Conv2D(64, kernel_size=(4,4), strides = 2, activation="relu"))
+        model.add(Conv2D(64, (3,3), activation="relu"))
+        model.add(Flatten())
+        model.add(Dense(512, activation="relu"))
+        model.add(Dense(env.action_space.n, kernel_initializer="uniform", activation="linear"))
+
+        if os.path.isfile("sonic_model.h5"):
+            model.load_weights("sonic_model.h5")
+
+        model.compile(loss="mse", optimizer=optimizers.Adam(lr=learning_rate), metrics=["accuracy"])
+
 
 Note that the activation on the output layer is linear to take into account the range of Q-values obtained on as wide a range as possible, unlike with a transformation into tanh or sigmoid.
 I used a mean-squarred-error Adam optimizer.
@@ -86,7 +114,12 @@ To 128 RGB, bigger that the canon 84 BW. I think there is information in color a
 Increased batch size to 256 to see more of the captured frames
 
 ## Results
-<p align="center"> <video src="sonicR9_0.1rand.mp4"/> </p>
+
+<p align="center">
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=pGbi0x0sSJQ
+" target="_blank"><img src="http://img.youtube.com/vi/pGbi0x0sSJQ/0.jpg" 
+alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10" /></a>
+ </p>
 
 One of my many experiment. Two things to take into account:
 - setting the random movements rate can prevent the algorithm to take the right movmeents at the right time: "I should jump but I am in random mode so I don't"
