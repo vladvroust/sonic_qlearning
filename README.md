@@ -115,7 +115,7 @@ Increased batch size to 256 to see more of the captured frames
 alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10" /></a>
  </p>
 
-One of my many experiment. Two things to take into account:
+One of my many experiments. Two things to take into account:
 - setting the random movements rate can prevent the algorithm to take the right movement at the right time: "I should jump but I am in random mode so I don't"
 -  local minimium: "I should advance by default" which could be overcome by not allowing the algorithm not to earn point for a set time
 
