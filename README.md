@@ -20,9 +20,8 @@ That kind of challenge in complex and unpredictible environments will also contr
 It was my first Reinforcement Learning implementation so I decided to pass on the baselines provided for the contest and start from stratch to have an intimate understanding of every step of the process of a DQN algorithm.
 
 ## Concept
-Input is the observation state of the game in the form of an image capture and the score.
-
-Output is a Q-vector estimating points earned for each possible actions given the current state.
+- Input is the observation state of the game in the form of an image capture and the score.
+- Output is a Q-vector estimating points earned for each possible actions given the current state.
 
 We give the algorithm:
 - the in-game score
@@ -117,10 +116,10 @@ alt="IMAGE ALT TEXT HERE" width="560" height="315" border="10" /></a>
  </p>
 
 One of my many experiment. Two things to take into account:
-- setting the random movements rate can prevent the algorithm to take the right movmeents at the right time: "I should jump but I am in random mode so I don't"
+- setting the random movements rate can prevent the algorithm to take the right movement at the right time: "I should jump but I am in random mode so I don't"
 -  local minimium: "I should advance by default" which could be overcome by not allowing the algorithm not to earn point for a set time
 
-I will be competing in future competition to try to overcome these limist.
+I will be competing in future competition to try to overcome these limits.
 
 ## Difficulties
 Tuning of the hyper-parameters with the time involved is the most difficult aspect I found in this particular challenge:
