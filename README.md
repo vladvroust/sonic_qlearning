@@ -21,6 +21,7 @@ It was my first Reinforcement Learning implementation so I decided to pass on th
 
 ## Concept
 Input is the observation state of the game in the form of an image capture and the score.
+
 Output is a Q-vector estimating points earned for each possible actions given the current state.
 
 We give the algorithm:
@@ -43,9 +44,7 @@ To stabilise the algorithm, we introduce a target network which is the same as t
         Q = model.predict(diff_obs[np.newaxis,:])
         Q_ = model.predict(diff_obs_new[np.newaxis,:])
         Q_target = target_model.predict(diff_obs_new[np.newaxis,:])
-
         target_ = copy.copy(Q)
-
         target_[0,action] = reward_ + gamma * Q_target[0,:][np.argmax(Q_[0,:])]
 
 
@@ -60,10 +59,6 @@ We use a fairly classical CNN to give our algorithm eyes, with Keras, the algori
         model.add(Flatten())
         model.add(Dense(512, activation="relu"))
         model.add(Dense(env.action_space.n, kernel_initializer="uniform", activation="linear"))
-
-        if os.path.isfile("sonic_model.h5"):
-            model.load_weights("sonic_model.h5")
-
         model.compile(loss="mse", optimizer=optimizers.Adam(lr=learning_rate), metrics=["accuracy"])
 
 
